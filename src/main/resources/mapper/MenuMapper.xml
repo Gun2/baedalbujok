@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.gun2.beadalbujok.mapper.MenuMapper">
+
+    <update id="update">
+        UPDATE menu
+        SET `name`       = #{name},
+            price        = #{price},
+            `desc`       = #{desc},
+            updated_date = NOW()
+            <if test="imageName != null and imageName != ''">
+                , image_name   = #{imageName}
+            </if>
+        WHERE id = #{id}
+    </update>
+    <update id="softDelete">
+        UPDATE menu
+            SET `delete` = '1'
+        WHERE id = #{id}
+    </update>
+    <delete id="delete">
+        DELETE
+        FROM menu
+        WHERE id = #{id}
+    </delete>
+    <select id="findById" resultType="Menu">
+        SELECT *
+        FROM menu
+        WHERE id = #{id}
+          AND `delete` != '1'
+        LIMIT 1
+    </select>
+    <select id="findAll" resultType="Menu">
+        SELECT *
+        FROM menu
+        WHERE `delete` != '1'
+    </select>
+    <select id="findAllCardType" resultType="com.github.gun2.beadalbujok.dto.MenuDto$CardResponse">
+        SELECT a.*
+        FROM (
+                 SELECT m.id,
+                        m.name,
+                        m.price,
+                        m.`desc`,
+                        m.image_name,
+                        count(r.id)                  as reviewCnt,
+                        IFNULL(sum(r.evaluation), 0) as evaluationSum
+                 FROM menu m
+                          LEFT JOIN review r on m.id = r.menu_id
+                 WHERE m.`delete` != '1'
+                 GROUP BY m.id
+             ) a
+        ORDER BY a.id DESC
+
+    </select>
+
+    <insert id="insert">
+        INSERT INTO menu
+        SET `name` = #{name},
+            price = #{price},
+            `desc` = #{desc},
+            created_date = NOW(),
+            updated_date = NOW(),
+            image_name = #{imageName},
+            member_id = #{memberId}
+    </insert>
+
+
+</mapper>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.gun2.beadalbujok.mapper.PointTransactionMapper">
+
+    <insert id="insert">
+        INSERT INTO point_transaction
+            SET point_id = #{pointId},
+                balance = #{balance},
+                amount = #{amount},
+                target_point_id = #{targetPointId},
+                created_date = NOW()
+    </insert>
+    <select id="findAllByPointId" resultType="PointTransaction">
+        SELECT * FROM point_transaction WHERE point_id = #{point_id} OR target_point_id = #{point_id}
+        ORDER BY id DESC
+    </select>
+</mapper>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.gun2.beadalbujok.mapper.GifticonMapper">
+    <insert id="insert">
+        INSERT INTO gifticon
+            SET amount = #{amount},
+                `use` = '0',
+                serial_number = #{serialNumber},
+                created_date = NOW(),
+                updated_date = NOW()
+    </insert>
+    <update id="updateUseAndUseMemberIdById">
+        UPDATE gifticon
+            SET `use` = #{use},
+                use_member_id = #{useMemberId}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findBySerialNumber" resultType="Gifticon">
+        SELECT * FROM gifticon
+        WHERE serial_number = #{serialNumber}
+    </select>
+    <select id="findAll" resultType="Gifticon">
+        SELECT * FROM gifticon
+        ORDER BY id DESC
+    </select>
+</mapper>

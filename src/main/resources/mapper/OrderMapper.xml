@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.gun2.beadalbujok.mapper.OrderMapper">
+
+    <insert id="insert">
+        INSERT INTO `order`
+        SET member_id = #{memberId},
+            menu_id = #{menuId},
+            created_date = NOW(),
+            updated_date = NOW(),
+            price = #{price}
+    </insert>
+    <select id="findAllByMemberId" resultType="Order">
+        SELECT * FROM `order`
+        WHERE member_id = #{memberId}
+        ORDER BY id DESC
+    </select>
+</mapper>

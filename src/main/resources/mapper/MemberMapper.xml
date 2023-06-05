@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.github.gun2.beadalbujok.mapper.MemberMapper">
+    <insert id="insert">
+        INSERT member
+            SET username = #{username},
+                password = #{password},
+                `name` = #{name},
+                role_id = #{roleId},
+                created_date = NOW(),
+                updated_date = NOW()
+        <selectKey keyProperty="id" order="AFTER" resultType="Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+    <update id="update">
+        UPDATE member
+            SET `name` = #{name},
+                password = #{password},
+                updated_date = NOW()
+            WHERE id = #{id}
+    </update>
+    <update id="updateRoleIdById">
+        UPDATE member
+            SET `role_id` = #{roleId}
+        WHERE id = #{id}
+    </update>
+
+    <select id="findByUsername" resultType="Member">
+        SELECT * FROM member WHERE username = #{username}
+    </select>
+    <select id="findById" resultType="Member">
+        SELECT * FROM member WHERE id = #{id}
+    </select>
+    <select id="findAll" resultType="Member">
+        SELECT * FROM member;
+    </select>
+    <select id="findByUsernameWithRoleName" resultType="com.github.gun2.beadalbujok.dto.MemberDto$FormResponse">
+        SELECT m.id,
+               m.username,
+               m.`name`,
+               m.created_date as createdDate,
+               m.updated_date as updatedDate,
+               r.name as roleName
+        FROM member m
+        LEFT JOIN role r
+        ON m.role_id = r.id
+        WHERE m.username = #{username}
+    </select>
+</mapper>
