@@ -84,7 +84,7 @@
                                 <img src="/images/upload/<c:out value="${review.imageName}"/>"/>
                             </c:if>
                         </div>
-                        <pre><c:out value="${review.content}"/></pre>
+                        <pre>${review.content}</pre>
                     </div>
                     <hr/>
                 </c:forEach>
