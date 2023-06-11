@@ -13,7 +13,7 @@
                 created_date = NOW()
     </insert>
     <select id="findAllByPointId" resultType="PointTransaction">
-        SELECT * FROM point_transaction WHERE point_id = #{point_id} OR target_point_id = #{point_id}
+        SELECT * FROM point_transaction WHERE point_id = #{point_id}
         ORDER BY id DESC
     </select>
 </mapper>
