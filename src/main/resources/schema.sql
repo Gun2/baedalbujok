@@ -124,5 +124,5 @@ CREATE TABLE IF NOT EXISTS `review` (
     KEY `review_menu_id_fk` (`menu_id`),
     CONSTRAINT `review_member_id_fk` FOREIGN KEY (`member_id`) REFERENCES `member` (`id`),
     CONSTRAINT `review_menu_id_fk` FOREIGN KEY (`menu_id`) REFERENCES `menu` (`id`)
-    ) ENGINE=InnoDB AUTO_INCREMENT=1201 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='음식 리뷰';
+    ) ENGINE=InnoDB AUTO_INCREMENT=1202 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='음식 리뷰';
 
