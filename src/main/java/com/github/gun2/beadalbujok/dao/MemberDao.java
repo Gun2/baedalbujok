@@ -24,6 +24,7 @@ public class MemberDao {
     }
 
     public Member insert(Member member){
+        //단방향 암호화 진행
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         memberMapper.insert(member);
         return member;

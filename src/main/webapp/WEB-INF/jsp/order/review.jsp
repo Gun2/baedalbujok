@@ -60,6 +60,7 @@
             <div class="review-area">
                 <c:forEach items="${reviewList}" var="review">
                     <div>
+                        <%--사용자 이름--%>
                         <h1><c:out value="${review.memberName}"/></h1>
                         <div class="review-info">
                             <div class="d-flex align-items-center small text-warning mb-2">
@@ -84,7 +85,8 @@
                                 <img src="/images/upload/<c:out value="${review.imageName}"/>"/>
                             </c:if>
                         </div>
-                        <pre><c:out value="${review.content}"/></pre>
+                        <%--리뷰 내용--%>
+                        <pre>${review.content}</pre>
                     </div>
                     <hr/>
                 </c:forEach>

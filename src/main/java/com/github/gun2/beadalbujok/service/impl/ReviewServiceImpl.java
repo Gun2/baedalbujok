@@ -33,12 +33,15 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     @Transactional
-    public void insert(Authentication authentication, ReviewDto.FormRequest formRequest) throws IOException {
+    public void insert(Authentication authentication, ReviewDto.FormRequest formRequest)
+            throws IOException {
         Member member = memberService.findByUsername(authentication);
         formRequest.setMemberId(member.getId());
         MultipartFile imageFile = formRequest.getImageFile();
         if (imageFile != null){
+            //이미지 파일 이름 가져오기
             String filename = imageFile.getOriginalFilename();
+            //이미지 저장
             imageFile.transferTo(new File(appInfo.getUploadDir() + "/" + filename));
             formRequest.setImageName(filename);
         }
