@@ -1,5 +1,6 @@
 package com.github.gun2.beadalbujok.controller;
 
+import com.github.gun2.beadalbujok.component.PreAuthComponent;
 import com.github.gun2.beadalbujok.domain.Member;
 import com.github.gun2.beadalbujok.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +9,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class HomeController {
     private final MemberService memberService;
+    private final PreAuthComponent preAuthComponent;
 
     @GetMapping("/")
     public String home(){
@@ -58,5 +61,24 @@ public class HomeController {
     @GetMapping("/template/footer")
     public String footer(){
         return "template/footer";
+    }
+
+    @GetMapping("/pre-auth")
+    public String preAuth(HttpServletRequest request){
+        if(preAuthComponent.isPreAuthenticated(request)){
+            return "redirect:/";
+        }
+        return "preAuth";
+    }
+
+    @PostMapping("/pre-auth")
+    public String preAuthCheck(@RequestParam("preAuth") String preAuth,
+                               HttpServletResponse response){
+        if(preAuthComponent.isEqualsPreAuthPassword(preAuth)){
+            preAuthComponent.setPreAuthKeyInCookie(response);
+            return "redirect:/";
+        }else{
+            return "redirect:/pre-auth?error=notMatched";
+        }
     }
 }
