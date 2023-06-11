@@ -28,7 +28,7 @@ public class PreAuthComponent {
      * @return 옳바른 값이면 true반환
      */
     public boolean isPreAuthenticated(HttpServletRequest request){
-        if(request != null){
+        if(request != null && request.getCookies() != null){
             Optional<Cookie> preAuthCookie = Arrays.stream(request.getCookies())
                     .filter(cookie -> KEY_NAME.equals(cookie.getName()))
                     .findAny();
