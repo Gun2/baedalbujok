@@ -89,6 +89,7 @@ public class PointServiceImpl implements PointService {
                 .build());
 
         //수신자 돈 증가
+        targetPoint = pointMapper.findByMemberId(targetMemberId).orElseThrow();
         this.plusBalanceById(amount, targetPoint.getId());
         pointTransactionMapper.insert(PointTransaction.builder()
                 .pointId(targetPoint.getId())
