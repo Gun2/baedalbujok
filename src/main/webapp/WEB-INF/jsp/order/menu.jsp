@@ -115,7 +115,9 @@
                         <button class="btn btn-primary" onclick="doOrder()">주문하기</button>
                         <sec:authorize access="isAuthenticated()">
                             <sec:authentication property="principal.id" var="principalId"/>
-                            <c:if test="${menu.memberId == principalId}">
+                            <sec:authorize access="hasRole('ADMIN')" var="isAdmin"/>
+
+                            <c:if test="${menu.memberId == principalId || isAdmin}">
                                 <button class="btn btn-secondary" onclick="goUpdate()">수정하기</button>
                             </c:if>
                         </sec:authorize>
