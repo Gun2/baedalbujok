@@ -2,6 +2,7 @@ package com.github.gun2.beadalbujok.service.impl;
 
 import com.github.gun2.beadalbujok.domain.Gifticon;
 import com.github.gun2.beadalbujok.domain.Member;
+import com.github.gun2.beadalbujok.domain.Point;
 import com.github.gun2.beadalbujok.dto.GifticonDto;
 import com.github.gun2.beadalbujok.exception.NotFoundGifticonException;
 import com.github.gun2.beadalbujok.mapper.GifticonMapper;
@@ -47,7 +48,8 @@ public class GifticonServiceImpl implements GifticonService {
             throw new NotFoundGifticonException();
         }
         Long amount = gifticon.getAmount();
-        pointService.plusBalanceById(amount, member.getId());
+        Point point = pointService.findByMemberId(member.getId()).get();
+        pointService.plusBalanceById(amount, point.getId());
         gifticonMapper.updateUseAndUseMemberIdById("1", member.getId(), gifticon.getId());
         return gifticon;
     }
